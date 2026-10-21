@@ -2,7 +2,7 @@
 
 import type { Tokens } from "@/services/api/types/tokens";
 
-// Sign-in through the identity center (start-ui-web): OpenID Connect,
+// Sign-in through the identity center (nucleo-admin): OpenID Connect,
 // Authorization Code + PKCE, as a public client (no secret in the browser).
 export const OIDC_ISSUER = process.env.NEXT_PUBLIC_OIDC_ISSUER ?? "";
 export const OIDC_CLIENT_ID = process.env.NEXT_PUBLIC_OIDC_CLIENT_ID ?? "";
