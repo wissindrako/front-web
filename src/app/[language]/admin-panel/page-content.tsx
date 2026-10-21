@@ -1,6 +1,5 @@
 "use client";
 
-import { RoleEnum } from "@/services/api/types/role";
 import withPageRequiredAuth from "@/services/auth/with-page-required-auth";
 import { useTranslation } from "@/services/i18n/client";
 
@@ -19,4 +18,6 @@ function AdminPanel() {
   );
 }
 
-export default withPageRequiredAuth(AdminPanel, { roles: [RoleEnum.ADMIN] });
+export default withPageRequiredAuth(AdminPanel, {
+  permissions: ["users.read"],
+});

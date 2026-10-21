@@ -8,7 +8,6 @@ import useAuth from "@/services/auth/use-auth";
 import useAuthActions from "@/services/auth/use-auth-actions";
 import { useTranslation } from "@/services/i18n/client";
 import Link from "@/components/link";
-import { RoleEnum } from "@/services/api/types/role";
 import { IS_SIGN_UP_ENABLED } from "@/services/auth/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -132,11 +131,10 @@ function NavUser() {
 
 function AppSidebar() {
   const { t } = useTranslation("common");
-  const { user } = useAuth();
+  const { user, permissions } = useAuth();
   const pathname = usePathname();
 
-  const isAdmin =
-    !!user?.role && [RoleEnum.ADMIN].includes(Number(user?.role?.id));
+  const canSeeUsers = !!user && permissions.includes("users.read");
 
   return (
     <>
@@ -155,7 +153,7 @@ function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
 
-                {isAdmin && (
+                {canSeeUsers && (
                   <>
                     <SidebarMenuItem>
                       <SidebarMenuButton

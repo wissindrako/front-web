@@ -28,5 +28,13 @@
       }
     }
   },
-  "or": "OR"
+  "or": "OR",
+  "identity": {
+    "redirecting": "Taking you to the identity center to sign in…",
+    "unavailable": "The identity center could not be reached. Try again in a moment.",
+    "button": "Sign in with the identity center",
+    "completing": "Completing the sign-in…",
+    "failed": "The sign-in could not be completed:",
+    "retry": "Try again"
+  }
 }

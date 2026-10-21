@@ -359,4 +359,6 @@ function EditUser() {
   );
 }
 
-export default withPageRequiredAuth(EditUser, { roles: [RoleEnum.ADMIN] });
+export default withPageRequiredAuth(EditUser, {
+  permissions: ["users.update"],
+});

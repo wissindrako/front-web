@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback } from "react";
-import { AUTH_REFRESH_URL } from "./config";
 import { FetchInputType, FetchInitType } from "./types/fetch-params";
 import HTTP_CODES_ENUM from "./types/http-codes";
 import type { Tokens } from "./types/tokens";
@@ -9,9 +8,12 @@ import useLanguage from "../i18n/use-language";
 import { getTokensInfo, setTokensInfo } from "../auth/auth-tokens-info";
 import { emitAuthEvent } from "../auth/auth-events";
 import type { TokensInfo } from "../auth/auth-context";
+import {
+  OidcRefreshRejectedError,
+  refreshTokens as refreshOidcTokens,
+} from "../auth/oidc";
 
 const TOKEN_EXPIRES_SKEW_MS = 60000;
-const REFRESH_TIMEOUT_MS = 10000;
 const REFRESH_LOCK_WAIT_MS = 15000;
 
 type RefreshResult = "refreshed" | "unauthorized" | "error";
@@ -38,9 +40,13 @@ function getTokenAccountId(token: Tokens["token"]): string | null {
 
     if (typeof claims !== "object" || claims === null) return null;
 
-    const id = (claims as { id?: unknown }).id;
+    // "sub" in identity center tokens, "id" in the API's own tokens
+    const { sub, id } = claims as { sub?: unknown; id?: unknown };
+    const accountId = sub ?? id;
 
-    return id === null || id === undefined ? null : String(id);
+    return accountId === null || accountId === undefined
+      ? null
+      : String(accountId);
   } catch {
     return null;
   }
@@ -70,59 +76,31 @@ async function requestNewTokens(): Promise<RefreshResult> {
     return "unauthorized";
   }
 
-  let response: Response;
-
   try {
-    response = await fetch(AUTH_REFRESH_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokens.refreshToken}`,
-      },
+    setTokensInfo(await refreshOidcTokens(tokens));
 
-      signal: AbortSignal.timeout(REFRESH_TIMEOUT_MS),
-    });
-  } catch {
+    return "refreshed";
+  } catch (error) {
+    if (!(error instanceof OidcRefreshRejectedError)) {
+      // Network failure or identity center down: keep the session
+      return "error";
+    }
+  }
+
+  const change = classifyStoredTokens(tokens);
+
+  if (change === "rotated") {
+    return "refreshed";
+  }
+
+  if (change === "other-account") {
     return "error";
   }
 
-  if (
-    response.status === HTTP_CODES_ENUM.UNAUTHORIZED ||
-    response.status === HTTP_CODES_ENUM.UNPROCESSABLE_ENTITY
-  ) {
-    const change = classifyStoredTokens(tokens);
+  setTokensInfo(null);
+  emitAuthEvent({ type: "logout" });
 
-    if (change === "rotated") {
-      return "refreshed";
-    }
-
-    if (change === "other-account") {
-      return "error";
-    }
-
-    setTokensInfo(null);
-    emitAuthEvent({ type: "logout" });
-
-    return "unauthorized";
-  }
-
-  try {
-    const newTokens = await response.json();
-
-    if (newTokens.token) {
-      setTokensInfo({
-        token: newTokens.token,
-        refreshToken: newTokens.refreshToken,
-        tokenExpires: newTokens.tokenExpires,
-      });
-
-      return "refreshed";
-    }
-  } catch {
-    // Malformed response body — treated like a network failure below.
-  }
-
-  return "error";
+  return "unauthorized";
 }
 
 async function refreshTokensExclusive(
@@ -225,7 +203,6 @@ function useFetch() {
 
       const isRetryable =
         response.status === HTTP_CODES_ENUM.UNAUTHORIZED &&
-        input !== AUTH_REFRESH_URL &&
         Boolean(getTokensInfo()?.refreshToken);
 
       if (isRetryable && (await refreshTokens()) === "refreshed") {

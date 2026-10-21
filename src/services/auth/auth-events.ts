@@ -27,6 +27,11 @@ export function emitAuthEvent(event: AuthEvent) {
   channel?.postMessage(event);
 }
 
+// Notifies only the other tabs
+export function broadcastAuthEvent(event: AuthEvent) {
+  channel?.postMessage(event);
+}
+
 export function onAuthEvent(listener: AuthEventListener) {
   listeners.add(listener);
 

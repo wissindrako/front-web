@@ -3,7 +3,7 @@ import useAuth from "@/services/auth/use-auth";
 import withPageRequiredAuth from "@/services/auth/with-page-required-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import Link from "@/components/link";
+import { OIDC_ACCOUNT_URL } from "@/services/auth/oidc";
 import { useTranslation } from "@/services/i18n/client";
 
 function Profile() {
@@ -35,7 +35,7 @@ function Profile() {
           </p>
           <div>
             <Button asChild data-testid="edit-profile">
-              <Link href="/profile/edit">{t("profile:actions.edit")}</Link>
+              <a href={OIDC_ACCOUNT_URL}>{t("profile:actions.edit")}</a>
             </Button>
           </div>
         </div>

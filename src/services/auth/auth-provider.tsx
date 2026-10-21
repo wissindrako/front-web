@@ -15,18 +15,20 @@ import {
   TokensInfo,
 } from "./auth-context";
 import useFetch from "@/services/api/use-fetch";
-import { AUTH_LOGOUT_URL, AUTH_ME_URL } from "@/services/api/config";
+import { AUTH_ME_URL, AUTH_PERMISSIONS_URL } from "@/services/api/config";
 import HTTP_CODES_ENUM from "../api/types/http-codes";
 import {
   getTokensInfo,
   setTokensInfo as setTokensInfoToStorage,
 } from "./auth-tokens-info";
-import { emitAuthEvent, onAuthEvent } from "./auth-events";
+import { broadcastAuthEvent, emitAuthEvent, onAuthEvent } from "./auth-events";
 import queryClient from "@/services/react-query/query-client";
+import { signOutUrl } from "./oidc";
 
 function AuthProvider(props: PropsWithChildren) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [permissions, setPermissions] = useState<string[]>([]);
   const fetchBase = useFetch();
 
   const setTokensInfo = useCallback((tokensInfo: TokensInfo) => {
@@ -42,19 +44,20 @@ function AuthProvider(props: PropsWithChildren) {
 
   const logOut = useCallback(async () => {
     const tokens = getTokensInfo();
+    const url = await signOutUrl(tokens?.idToken);
 
-    try {
-      if (tokens?.token) {
-        await fetchBase(AUTH_LOGOUT_URL, {
-          method: "POST",
-        });
-      }
-    } finally {
-      // Local auth state must be cleared even when the logout request fails
-      // (offline, server down) — otherwise the user stays logged in.
+    if (!url) {
       setTokensInfo(null);
+      return;
     }
-  }, [setTokensInfo, fetchBase]);
+
+    // Also ends the identity center session, or the next sign-in would
+    // silently reuse it. This tab is leaving: updating its state now would
+    // let a protected page start a new sign-in that cancels this navigation
+    setTokensInfoToStorage(null);
+    broadcastAuthEvent({ type: "logout" });
+    window.location.assign(url);
+  }, [setTokensInfo]);
 
   const loadData = useCallback(async () => {
     const tokens = getTokensInfo();
@@ -71,6 +74,12 @@ function AuthProvider(props: PropsWithChildren) {
         }
 
         const data = await response.json();
+        const permissionsResponse = await fetchBase(AUTH_PERMISSIONS_URL, {
+          method: "GET",
+        });
+        setPermissions(
+          permissionsResponse.ok ? await permissionsResponse.json() : []
+        );
         setUser(data);
       }
     } finally {
@@ -86,6 +95,7 @@ function AuthProvider(props: PropsWithChildren) {
     return onAuthEvent((event) => {
       if (event.type === "logout") {
         setUser(null);
+        setPermissions([]);
         // Cached queries belong to the previous user; keeping them would
         // show that user's data to the next account on this machine.
         queryClient.clear();
@@ -99,8 +109,9 @@ function AuthProvider(props: PropsWithChildren) {
     () => ({
       isLoaded,
       user,
+      permissions,
     }),
-    [isLoaded, user]
+    [isLoaded, user, permissions]
   );
 
   const contextActionsValue = useMemo(

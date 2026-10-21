@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import EditProfile from "./page-content";
+import { redirect } from "next/navigation";
 import { getServerTranslation } from "@/services/i18n";
 
 type Props = {
@@ -16,5 +16,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default function Page() {
-  return <EditProfile />;
+  // Accounts are managed in the identity center
+  return redirect(process.env.NEXT_PUBLIC_OIDC_ACCOUNT_URL ?? "/");
 }

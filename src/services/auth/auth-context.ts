@@ -8,9 +8,13 @@ export type TokensInfo = Tokens | null;
 
 export const AuthContext = createContext<{
   user: User | null;
+  // Permission codes in the API (e.g. "users.read"), given by the
+  // identity center
+  permissions: string[];
   isLoaded: boolean;
 }>({
   user: null,
+  permissions: [],
   isLoaded: true,
 });
 
