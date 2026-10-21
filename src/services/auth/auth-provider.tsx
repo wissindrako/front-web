@@ -100,6 +100,9 @@ function AuthProvider(props: PropsWithChildren) {
         // show that user's data to the next account on this machine.
         queryClient.clear();
       } else {
+        // Not loaded until the new user arrives: protected pages wait instead
+        // of sending the user back to sign in
+        setIsLoaded(false);
         loadData();
       }
     });
