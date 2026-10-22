@@ -8,7 +8,8 @@
     "signUp": "إنشاء حساب",
     "profile": "الملف الشخصي",
     "users": "المستخدمون",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "audit": "Audit log"
   },
   "formInputs": {
     "avatarInput": {

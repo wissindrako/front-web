@@ -135,6 +135,7 @@ function AppSidebar() {
   const pathname = usePathname();
 
   const canSeeUsers = !!user && permissions.includes("users.read");
+  const canSeeAudit = !!user && permissions.includes("audit.read");
 
   return (
     <>
@@ -167,6 +168,18 @@ function AppSidebar() {
                     </SidebarMenuItem>
                     {/* sidebar-menu-items */}
                   </>
+                )}
+                {canSeeAudit && (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={pathname.includes("/admin-panel/audit")}
+                    >
+                      <Link href="/admin-panel/audit">
+                        {t("common:navigation.audit")}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                 )}
               </SidebarMenu>
             </SidebarGroupContent>

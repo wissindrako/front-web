@@ -8,7 +8,8 @@
     "signUp": "Crear cuenta",
     "profile": "Perfil",
     "users": "Usuarios",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "audit": "Auditoría"
   },
   "formInputs": {
     "avatarInput": {

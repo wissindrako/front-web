@@ -8,7 +8,8 @@
     "signUp": "S'inscrire",
     "profile": "Profil",
     "users": "Utilisateurs",
-    "logout": "Se déconnecter"
+    "logout": "Se déconnecter",
+    "audit": "Audit log"
   },
   "formInputs": {
     "avatarInput": {
