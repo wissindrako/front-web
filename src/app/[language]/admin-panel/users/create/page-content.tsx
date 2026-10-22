@@ -17,6 +17,8 @@ import { usePostUserService } from "@/services/api/services/users";
 import { useRouter } from "next/navigation";
 import { Role, RoleEnum } from "@/services/api/types/role";
 import FormSelectInput from "@/components/form/select/form-select";
+import IdentityCenterNotice from "@/components/identity-center-notice";
+import { useIdentitySettings } from "@/services/identity/use-identity-settings";
 
 type CreateFormData = {
   email: string;
@@ -235,6 +237,22 @@ function FormCreateUser() {
 }
 
 function CreateUser() {
+  const { t } = useTranslation("common");
+  const { managed, managementUrl } = useIdentitySettings();
+
+  if (managed === undefined) return null;
+
+  if (managed) {
+    return (
+      <div className="mx-auto mt-6 w-full max-w-md px-4">
+        <IdentityCenterNotice
+          message={t("common:identityCenter.users")}
+          managementUrl={managementUrl}
+        />
+      </div>
+    );
+  }
+
   return <FormCreateUser />;
 }
 

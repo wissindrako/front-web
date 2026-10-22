@@ -36,6 +36,8 @@ import UserFilter from "./user-filter";
 import { useRouter, useSearchParams } from "next/navigation";
 import { UserFilterType, UserSortType } from "./user-filter-types";
 import { SortEnum } from "@/services/api/types/sort-type";
+import { useIdentitySettings } from "@/services/identity/use-identity-settings";
+import ExternalLink from "lucide-react/dist/esm/icons/external-link";
 
 type UsersKeys = keyof User;
 
@@ -171,6 +173,11 @@ function Actions({ user }: { user: User }) {
 function Users() {
   const { t: tUsers } = useTranslation("admin-panel-users");
   const { t: tRoles } = useTranslation("admin-panel-roles");
+  const { t: tCommon } = useTranslation("common");
+  // With the identity center, local roles mean nothing and people are
+  // invited there
+  const { managed, managementUrl } = useIdentitySettings();
+  const showRoles = managed === false;
   const searchParams = useSearchParams();
   const router = useRouter();
   const [{ order, orderBy }, setSort] = useState<{
@@ -235,15 +242,25 @@ function Users() {
             {tUsers("admin-panel-users:title")}
           </h3>
           <div className="flex items-center gap-2">
-            <UserFilter />
-            <Button
-              asChild
-              className="bg-success text-success-foreground hover:bg-success/90"
-            >
-              <Link href="/admin-panel/users/create">
-                {tUsers("admin-panel-users:actions.create")}
-              </Link>
-            </Button>
+            {showRoles && <UserFilter />}
+            {managed === false && (
+              <Button
+                asChild
+                className="bg-success text-success-foreground hover:bg-success/90"
+              >
+                <Link href="/admin-panel/users/create">
+                  {tUsers("admin-panel-users:actions.create")}
+                </Link>
+              </Button>
+            )}
+            {managed && managementUrl && (
+              <Button asChild variant="outline" data-testid="identity-invite">
+                <a href={managementUrl} target="_blank" rel="noreferrer">
+                  {tCommon("common:identityCenter.invite")}
+                  <ExternalLink />
+                </a>
+              </Button>
+            )}
           </div>
         </div>
 
@@ -280,9 +297,11 @@ function Users() {
                     {tUsers("admin-panel-users:table.column3")}
                   </TableSortCellWrapper>
 
-                  <TableHead style={{ width: 80 }}>
-                    {tUsers("admin-panel-users:table.column4")}
-                  </TableHead>
+                  {showRoles && (
+                    <TableHead style={{ width: 80 }}>
+                      {tUsers("admin-panel-users:table.column4")}
+                    </TableHead>
+                  )}
                   <TableHead style={{ width: 130 }}></TableHead>
                 </TableRow>
                 {isFetchingNextPage && (
@@ -316,9 +335,11 @@ function Users() {
                     {user?.firstName} {user?.lastName}
                   </TableCell>
                   <TableCell>{user?.email}</TableCell>
-                  <TableCell style={{ width: 80 }}>
-                    {tRoles(`role.${user?.role?.id}`)}
-                  </TableCell>
+                  {showRoles && (
+                    <TableCell style={{ width: 80 }}>
+                      {tRoles(`role.${user?.role?.id}`)}
+                    </TableCell>
+                  )}
                   <TableCell style={{ width: 130 }}>
                     {!!user && <Actions user={user} />}
                   </TableCell>

@@ -40,5 +40,12 @@
     "facebook": {
       "action": "Iniciar sesión con Facebook"
     }
+  },
+  "identityCenter": {
+    "title": "Gestionado por el centro de identidad",
+    "open": "Abrir el centro de identidad",
+    "invite": "Invitar en el centro de identidad",
+    "users": "Las personas se invitan desde el centro de identidad. Su usuario aparece aquí la primera vez que inician sesión.",
+    "access": "El rol, los permisos y la contraseña de cada persona se gestionan en el centro de identidad."
   }
 }

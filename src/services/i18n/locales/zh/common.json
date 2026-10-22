@@ -40,5 +40,12 @@
     "facebook": {
       "action": "使用 Facebook 登录"
     }
+  },
+  "identityCenter": {
+    "title": "Managed by the identity center",
+    "open": "Open the identity center",
+    "invite": "Invite in the identity center",
+    "users": "People are invited from the identity center. Their user shows up here the first time they sign in.",
+    "access": "Each person's role, permissions and password are managed in the identity center."
   }
 }
