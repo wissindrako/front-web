@@ -1,0 +1,99 @@
+{
+  "title": "Menu",
+  "description": "The navigation menu every user sees. Each entry can require a permission: users only see what they may open, and a group without visible entries is hidden.",
+  "actions": {
+    "create": "New entry",
+    "addChild": "Add an entry to this group",
+    "edit": "Edit",
+    "delete": "Delete",
+    "activate": "Show",
+    "deactivate": "Hide",
+    "drag": "Drag to reorder",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "list": {
+    "loading": "Loading…",
+    "empty": "The menu is empty: create its first entry.",
+    "group": "Group",
+    "inactive": "Hidden",
+    "requires": "Requires {{permission}}",
+    "everyone": "Every signed-in user",
+    "emptyGroup": "Empty group: it is not shown until it has entries.",
+    "dragHint": "Drag the handle (or focus it and use the arrow keys) to reorder. To move an entry into another group, edit it."
+  },
+  "preview": {
+    "title": "Preview",
+    "description": "The menu of a user with the checked permissions.",
+    "empty": "Nothing to show"
+  },
+  "form": {
+    "createTitle": "New menu entry",
+    "editTitle": "Edit menu entry",
+    "description": "Links open a page of the app (/…) or an external site (https://…). Groups hold links.",
+    "kind": {
+      "label": "Type",
+      "link": "Link",
+      "group": "Group"
+    },
+    "label": {
+      "label": "Label",
+      "required": "The label is required"
+    },
+    "labelKey": {
+      "label": "Translation key (optional, e.g. common:navigation.users)"
+    },
+    "url": {
+      "label": "URL",
+      "required": "The URL is required for a link"
+    },
+    "parent": {
+      "label": "Group",
+      "none": "None (top level)"
+    },
+    "icon": {
+      "label": "Icon",
+      "none": "No icon",
+      "search": "Search icons (lucide.dev)…",
+      "noResults": "No icons match",
+      "hint": "Icons from lucide.dev",
+      "clear": "Remove icon"
+    },
+    "permission": {
+      "label": "Who sees it",
+      "anyone": "Every signed-in user"
+    },
+    "isActive": {
+      "label": "Visible"
+    },
+    "groupHint": "A group is shown only to users who can see at least one of its entries.",
+    "linkHint": "The page itself must still check the permission: the menu only hides the entry."
+  },
+  "errors": {
+    "url": "Use a path starting with / or an http(s):// URL",
+    "icon": "Pick an icon from the list",
+    "labelKey": "Use namespace:key",
+    "unknownPermission": "That permission does not exist in the API",
+    "iconMustBeKebabCase": "Pick an icon from the list",
+    "urlMustBePathOrHttp": "Use a path starting with / or an http(s):// URL",
+    "labelKeyMustBeNamespaceKey": "Use namespace:key",
+    "parentMustBeTopLevel": "Groups can only be at the top level",
+    "groupCannotBeNested": "A group with entries cannot go inside another group",
+    "entryInGroupNeedsUrl": "An entry inside a group must be a link",
+    "parentNotFound": "That group no longer exists",
+    "cannotBeItsOwnParent": "An entry cannot be its own group"
+  },
+  "confirm": {
+    "delete": {
+      "title": "Delete \"{{label}}\"?",
+      "message": "It disappears from every user's menu.",
+      "groupMessage": "Its {{count}} entries are deleted too."
+    }
+  },
+  "alerts": {
+    "saved": "Menu saved",
+    "deleted": "Entry deleted",
+    "error": "The change could not be saved",
+    "loadError": "The menu could not be loaded"
+  }
+}

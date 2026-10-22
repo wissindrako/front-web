@@ -9,7 +9,9 @@
     "profile": "个人资料",
     "users": "用户",
     "logout": "退出登录",
-    "audit": "Audit log"
+    "audit": "Audit log",
+    "administration": "Administration",
+    "menu": "Menu"
   },
   "formInputs": {
     "avatarInput": {

@@ -8,6 +8,7 @@ import useAuth from "@/services/auth/use-auth";
 import useAuthActions from "@/services/auth/use-auth-actions";
 import { useTranslation } from "@/services/i18n/client";
 import Link from "@/components/link";
+import NavMenu from "@/components/nav-menu";
 import { IS_SIGN_UP_ENABLED } from "@/services/auth/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -130,13 +131,6 @@ function NavUser() {
 }
 
 function AppSidebar() {
-  const { t } = useTranslation("common");
-  const { user, permissions } = useAuth();
-  const pathname = usePathname();
-
-  const canSeeUsers = !!user && permissions.includes("users.read");
-  const canSeeAudit = !!user && permissions.includes("audit.read");
-
   return (
     <>
       <CloseSidebarOnNavigate />
@@ -145,42 +139,8 @@ function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname.split("/").filter(Boolean).length <= 1}
-                  >
-                    <Link href="/">{t("common:navigation.home")}</Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-
-                {canSeeUsers && (
-                  <>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname.includes("/admin-panel/users")}
-                      >
-                        <Link href="/admin-panel/users">
-                          {t("common:navigation.users")}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    {/* sidebar-menu-items */}
-                  </>
-                )}
-                {canSeeAudit && (
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={pathname.includes("/admin-panel/audit")}
-                    >
-                      <Link href="/admin-panel/audit">
-                        {t("common:navigation.audit")}
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )}
+                {/* Entries come from the API's menu (Admin panel > Menu) */}
+                <NavMenu />
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

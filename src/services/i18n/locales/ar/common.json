@@ -9,7 +9,9 @@
     "profile": "الملف الشخصي",
     "users": "المستخدمون",
     "logout": "تسجيل الخروج",
-    "audit": "Audit log"
+    "audit": "Audit log",
+    "administration": "Administration",
+    "menu": "Menu"
   },
   "formInputs": {
     "avatarInput": {

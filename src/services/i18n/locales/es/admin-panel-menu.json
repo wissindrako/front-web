@@ -1,0 +1,99 @@
+{
+  "title": "Menú",
+  "description": "El menú de navegación que ve cada usuario. Cada entrada puede pedir un permiso: cada uno ve solo lo que puede abrir, y un grupo sin entradas visibles se oculta.",
+  "actions": {
+    "create": "Nueva entrada",
+    "addChild": "Agregar una entrada a este grupo",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "activate": "Mostrar",
+    "deactivate": "Ocultar",
+    "drag": "Arrastrar para reordenar",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "list": {
+    "loading": "Cargando…",
+    "empty": "El menú está vacío: creá su primera entrada.",
+    "group": "Grupo",
+    "inactive": "Oculta",
+    "requires": "Requiere {{permission}}",
+    "everyone": "Todos los usuarios",
+    "emptyGroup": "Grupo vacío: no se muestra hasta que tenga entradas.",
+    "dragHint": "Arrastrá el ícono de la izquierda (o enfocalo y usá las flechas) para reordenar. Para pasar una entrada a otro grupo, editala."
+  },
+  "preview": {
+    "title": "Vista previa",
+    "description": "El menú de un usuario con los permisos marcados.",
+    "empty": "No hay nada para mostrar"
+  },
+  "form": {
+    "createTitle": "Nueva entrada del menú",
+    "editTitle": "Editar entrada del menú",
+    "description": "Los enlaces abren una página de la app (/…) o un sitio externo (https://…). Los grupos agrupan enlaces.",
+    "kind": {
+      "label": "Tipo",
+      "link": "Enlace",
+      "group": "Grupo"
+    },
+    "label": {
+      "label": "Etiqueta",
+      "required": "La etiqueta es obligatoria"
+    },
+    "labelKey": {
+      "label": "Clave de traducción (opcional, ej. common:navigation.users)"
+    },
+    "url": {
+      "label": "URL",
+      "required": "La URL es obligatoria para un enlace"
+    },
+    "parent": {
+      "label": "Grupo",
+      "none": "Ninguno (primer nivel)"
+    },
+    "icon": {
+      "label": "Ícono",
+      "none": "Sin ícono",
+      "search": "Buscar íconos (lucide.dev)…",
+      "noResults": "Ningún ícono coincide",
+      "hint": "Íconos de lucide.dev",
+      "clear": "Quitar el ícono"
+    },
+    "permission": {
+      "label": "Quién la ve",
+      "anyone": "Todos los usuarios"
+    },
+    "isActive": {
+      "label": "Visible"
+    },
+    "groupHint": "Un grupo solo lo ven los usuarios que pueden ver al menos una de sus entradas.",
+    "linkHint": "La página igual tiene que verificar el permiso: el menú solo oculta la entrada."
+  },
+  "errors": {
+    "url": "Usá una ruta que empiece con / o una URL http(s)://",
+    "icon": "Elegí un ícono de la lista",
+    "labelKey": "Usá espacio:clave",
+    "unknownPermission": "Ese permiso no existe en la API",
+    "iconMustBeKebabCase": "Elegí un ícono de la lista",
+    "urlMustBePathOrHttp": "Usá una ruta que empiece con / o una URL http(s)://",
+    "labelKeyMustBeNamespaceKey": "Usá espacio:clave",
+    "parentMustBeTopLevel": "Los grupos solo pueden estar en el primer nivel",
+    "groupCannotBeNested": "Un grupo con entradas no puede ir dentro de otro grupo",
+    "entryInGroupNeedsUrl": "Una entrada dentro de un grupo tiene que ser un enlace",
+    "parentNotFound": "Ese grupo ya no existe",
+    "cannotBeItsOwnParent": "Una entrada no puede ser su propio grupo"
+  },
+  "confirm": {
+    "delete": {
+      "title": "¿Eliminar «{{label}}»?",
+      "message": "Desaparece del menú de todos los usuarios.",
+      "groupMessage": "También se eliminan sus {{count}} entradas."
+    }
+  },
+  "alerts": {
+    "saved": "Menú guardado",
+    "deleted": "Entrada eliminada",
+    "error": "No se pudo guardar el cambio",
+    "loadError": "No se pudo cargar el menú"
+  }
+}

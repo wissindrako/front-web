@@ -9,7 +9,9 @@
     "profile": "Профіль",
     "users": "Користувачі",
     "logout": "Вийти",
-    "audit": "Audit log"
+    "audit": "Audit log",
+    "administration": "Administration",
+    "menu": "Menu"
   },
   "formInputs": {
     "avatarInput": {

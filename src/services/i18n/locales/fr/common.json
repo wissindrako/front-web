@@ -9,7 +9,9 @@
     "profile": "Profil",
     "users": "Utilisateurs",
     "logout": "Se déconnecter",
-    "audit": "Audit log"
+    "audit": "Audit log",
+    "administration": "Administration",
+    "menu": "Menu"
   },
   "formInputs": {
     "avatarInput": {

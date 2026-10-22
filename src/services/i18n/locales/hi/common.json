@@ -9,7 +9,9 @@
     "profile": "प्रोफ़ाइल",
     "users": "उपयोगकर्ता",
     "logout": "लॉगआउट",
-    "audit": "Audit log"
+    "audit": "Audit log",
+    "administration": "Administration",
+    "menu": "Menu"
   },
   "formInputs": {
     "avatarInput": {
