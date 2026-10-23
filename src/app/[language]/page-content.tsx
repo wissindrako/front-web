@@ -131,9 +131,18 @@ function SignedIn() {
       </div>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-medium text-muted-foreground">
-          {t("home:signedIn.shortcuts")}
-        </h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm font-medium text-muted-foreground">
+            {t("home:signedIn.shortcuts")}
+          </h2>
+          <Link
+            href="/profile"
+            className="text-sm text-primary underline-offset-4 hover:underline"
+            data-testid="home-my-access"
+          >
+            {t("home:signedIn.myAccess")}
+          </Link>
+        </div>
         {menu.isPending ? (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[0, 1, 2].map((key) => (

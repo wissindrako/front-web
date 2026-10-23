@@ -11,7 +11,8 @@
     "shortcuts": "Tus accesos",
     "noShortcuts": "Todavía no tienes accesos en este sistema. Pide a un administrador que te asigne un rol.",
     "account": "Mi cuenta",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "myAccess": "Ver mis roles y permisos"
   },
   "privacyPolicy": "Política de privacidad"
 }

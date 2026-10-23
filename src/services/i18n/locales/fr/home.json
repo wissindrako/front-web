@@ -11,7 +11,8 @@
     "shortcuts": "Your shortcuts",
     "noShortcuts": "You have no access in this system yet. Ask an administrator to give you a role.",
     "account": "My account",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "myAccess": "See my roles and permissions"
   },
   "privacyPolicy": "Politique de confidentialité"
 }

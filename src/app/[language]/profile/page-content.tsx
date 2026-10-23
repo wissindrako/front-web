@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { OIDC_ACCOUNT_URL } from "@/services/auth/oidc";
 import { useTranslation } from "@/services/i18n/client";
+import MyAccess from "./my-access";
 
 function Profile() {
   const { user } = useAuth();
@@ -12,7 +13,7 @@ function Profile() {
   const initials = (user?.firstName?.[0] ?? "") + (user?.lastName?.[0] ?? "");
 
   return (
-    <div className="mx-auto w-full max-w-xl px-4">
+    <div className="mx-auto flex w-full max-w-xl flex-col gap-6 px-4 pb-6">
       <div className="flex gap-6 pt-6">
         <div>
           <Avatar className="size-40" data-testid="user-icon">
@@ -40,6 +41,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      <MyAccess />
     </div>
   );
 }
