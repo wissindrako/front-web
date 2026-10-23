@@ -1,5 +1,17 @@
 {
   "title": "Inicio",
-  "description": "Te damos la bienvenida a la aplicación de ejemplo reactjs-boilerplate. Puedes consultar la documentación completa <0>aquí</0>.",
+  "signedOut": {
+    "title": "Te damos la bienvenida",
+    "description": "Inicia sesión para usar el sistema. El acceso se gestiona en el centro de identidad: si te invitaron, entra con el correo de la invitación.",
+    "action": "Iniciar sesión"
+  },
+  "signedIn": {
+    "greeting": "Hola, {{name}}",
+    "description": "Sesión iniciada como {{email}}",
+    "shortcuts": "Tus accesos",
+    "noShortcuts": "Todavía no tienes accesos en este sistema. Pide a un administrador que te asigne un rol.",
+    "account": "Mi cuenta",
+    "logout": "Cerrar sesión"
+  },
   "privacyPolicy": "Política de privacidad"
 }
