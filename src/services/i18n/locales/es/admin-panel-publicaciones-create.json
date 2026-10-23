@@ -1,0 +1,42 @@
+{
+  "title": "Nueva publicación",
+  "actions": {
+    "submit": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "inputs": {
+    "titulo": {
+      "label": "Título",
+      "validation": {
+        "required": "El título es obligatorio",
+        "max": "Máximo 200 caracteres"
+      }
+    },
+    "resumen": {
+      "label": "Resumen (opcional)",
+      "validation": {
+        "max": "Máximo 300 caracteres"
+      }
+    },
+    "contenido": {
+      "label": "Contenido",
+      "validation": {
+        "required": "El contenido es obligatorio"
+      }
+    },
+    "estado": {
+      "label": "Estado",
+      "validation": {
+        "required": "Elige un estado"
+      }
+    },
+    "publicadaEn": {
+      "label": "Fecha de publicación (opcional)",
+      "validation": {}
+    },
+    "<system>": "Do not remove this property"
+  },
+  "alerts": {
+    "success": "Publicación creada"
+  }
+}

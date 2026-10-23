@@ -90,7 +90,8 @@
       "roles": "Roles",
       "settings": "Settings",
       "audit": "Audit log",
-      "menu-items": "Menu"
+      "menu-items": "Menu",
+      "publicaciones": "Publications"
     },
     "actions": {
       "read": "View",

@@ -11,7 +11,8 @@
     "logout": "Cerrar sesión",
     "audit": "Auditoría",
     "administration": "Administración",
-    "menu": "Menú"
+    "menu": "Menú",
+    "publicaciones": "Publicaciones"
   },
   "formInputs": {
     "avatarInput": {

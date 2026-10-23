@@ -11,7 +11,8 @@
     "logout": "लॉगआउट",
     "audit": "Audit log",
     "administration": "Administration",
-    "menu": "Menu"
+    "menu": "Menu",
+    "publicaciones": "Publications"
   },
   "formInputs": {
     "avatarInput": {
