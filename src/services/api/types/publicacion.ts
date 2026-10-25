@@ -1,15 +1,4 @@
-export type Publicacion = {
-  publicadaEn?: string | null;
+import type { Schemas } from "./schemas";
 
-  estado?: string;
-
-  contenido: string;
-
-  resumen?: string | null;
-
-  titulo: string;
-
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
+// From the API's contract (npm run generate:api)
+export type Publicacion = Schemas["Publicacion"];

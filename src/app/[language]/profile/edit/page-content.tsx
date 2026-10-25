@@ -179,7 +179,7 @@ function FormBasicInfo() {
     reset({
       firstName: user?.firstName ?? "",
       lastName: user?.lastName ?? "",
-      photo: user?.photo,
+      photo: user?.photo ?? undefined,
     });
   }, [user, reset]);
 

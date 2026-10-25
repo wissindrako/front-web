@@ -25,6 +25,7 @@ import {
 } from "@/services/api/services/users";
 import { useParams } from "next/navigation";
 import { Role, RoleEnum } from "@/services/api/types/role";
+import type { Schemas } from "@/services/api/types/schemas";
 import FormSelectInput from "@/components/form/select/form-select";
 import IdentityCenterNotice from "@/components/identity-center-notice";
 import { useIdentitySettings } from "@/services/identity/use-identity-settings";
@@ -34,7 +35,7 @@ type EditUserFormData = {
   firstName: string;
   lastName: string;
   photo?: FileEntity;
-  role?: Role;
+  role?: Schemas["RoleDto"];
 };
 
 type ChangeUserPasswordFormData = {
@@ -62,7 +63,7 @@ const useValidationEditUserSchema = (withRole: boolean) => {
         t("admin-panel-users-edit:inputs.lastName.validation.required")
       ),
     role: yup
-      .mixed<Role>()
+      .mixed<Schemas["RoleDto"]>()
       .test(
         "required",
         t("admin-panel-users-edit:inputs.role.validation.required"),
@@ -185,7 +186,7 @@ function FormEditUser({ withRole }: { withRole: boolean }) {
           firstName: user?.firstName ?? "",
           lastName: user?.lastName ?? "",
           role: withRole ? { id: Number(user?.role?.id) } : undefined,
-          photo: user?.photo,
+          photo: user?.photo ?? undefined,
         });
       }
     };

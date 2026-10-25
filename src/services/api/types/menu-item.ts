@@ -1,22 +1,12 @@
-// Entry of the navigation menu, managed in the API (Admin panel > Menu)
-export type MenuItem = {
-  id: string;
-  parentId: string | null;
-  label: string;
-  // Translation key ("namespace:key") shown instead of label when it exists
-  labelKey: string | null;
-  // App path ("/...") or external URL; null = group
-  url: string | null;
-  // lucide.dev icon name (kebab-case)
-  icon: string | null;
-  // Permission code required to see it; null = any signed-in user
-  permission: string | null;
-  order: number;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
+import type { Schemas } from "./schemas";
 
-export type MenuItemTree = MenuItem & { children: MenuItemTree[] };
+// Entry of the navigation menu, managed in the API (Admin panel > Menu):
+// labelKey is a translation key ("namespace:key") shown instead of label,
+// url an app path or external URL (null = group), icon a lucide.dev name,
+// permission the code required to see it (null = any signed-in user).
+// From the API's contract (npm run generate:api).
+export type MenuItem = Schemas["MenuItem"];
 
-export type MenuPermission = { code: string; description: string };
+export type MenuItemTree = Schemas["MenuItemTree"];
+
+export type MenuPermission = Schemas["Permission"];

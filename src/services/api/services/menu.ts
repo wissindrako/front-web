@@ -4,6 +4,7 @@ import { API_URL } from "../config";
 import wrapperFetchJsonResponse from "../wrapper-fetch-json-response";
 import { MenuItem, MenuItemTree, MenuPermission } from "../types/menu-item";
 import { RequestConfigType } from "./types/request-config";
+import type { Schemas } from "../types/schemas";
 
 // The signed-in user's menu, already filtered by their permissions
 export function useGetMyMenuService() {
@@ -45,10 +46,10 @@ export function useGetMenuPermissionsService() {
   );
 }
 
-export type MenuItemRequest = Pick<
-  MenuItem,
-  "label" | "labelKey" | "url" | "icon" | "permission" | "parentId" | "isActive"
-> & { order?: number };
+// order is set by the API when left out (last among its siblings)
+export type MenuItemRequest = Omit<Schemas["CreateMenuItemDto"], "order"> & {
+  order?: number;
+};
 
 export function usePostMenuItemService() {
   const fetch = useFetch();
@@ -69,7 +70,7 @@ export function usePatchMenuItemService() {
 
   return useCallback(
     (
-      data: { id: string; data: Partial<MenuItemRequest> },
+      data: { id: string; data: Schemas["UpdateMenuItemDto"] },
       requestConfig?: RequestConfigType
     ) =>
       fetch(`${API_URL}/v1/menu-items/${data.id}`, {
@@ -94,7 +95,7 @@ export function useDeleteMenuItemService() {
   );
 }
 
-export type MenuItemPosition = Pick<MenuItem, "id" | "parentId" | "order">;
+export type MenuItemPosition = Schemas["MenuItemPositionDto"];
 
 export function usePutMenuOrderService() {
   const fetch = useFetch();

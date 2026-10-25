@@ -5,6 +5,7 @@ import wrapperFetchJsonResponse from "../wrapper-fetch-json-response";
 import { InfinityPaginationType } from "../types/infinity-pagination";
 import { RequestConfigType } from "./types/request-config";
 import { Publicacion as Entity } from "../types/publicacion";
+import type { Schemas } from "../types/schemas";
 
 export type GetPublicacionesListRequest = {
   page: number;
@@ -51,10 +52,7 @@ export function useGetPublicacionService() {
   );
 }
 
-export type CreatePublicacionRequest = Omit<
-  Entity,
-  "id" | "createdAt" | "updatedAt"
->;
+export type CreatePublicacionRequest = Schemas["CreatePublicacionDto"];
 
 export type CreatePublicacionResponse = Entity;
 
@@ -75,7 +73,7 @@ export function useCreatePublicacionService() {
 
 export type EditPublicacionRequest = {
   id: Entity["id"];
-  data: Partial<Omit<Entity, "id" | "createdAt" | "updatedAt">>;
+  data: Schemas["UpdatePublicacionDto"];
 };
 
 export type EditPublicacionResponse = Entity;

@@ -5,15 +5,11 @@ import { User } from "../types/user";
 import { Tokens } from "../types/tokens";
 import wrapperFetchJsonResponse from "../wrapper-fetch-json-response";
 import { RequestConfigType } from "./types/request-config";
+import type { Schemas } from "../types/schemas";
 
-export type AuthLoginRequest = {
-  email: string;
-  password: string;
-};
+export type AuthLoginRequest = Schemas["AuthEmailLoginDto"];
 
-export type AuthLoginResponse = Tokens & {
-  user: User;
-};
+export type AuthLoginResponse = Schemas["LoginResponseDto"];
 
 export function useAuthLoginService() {
   const fetchBase = useFetch();
@@ -29,13 +25,9 @@ export function useAuthLoginService() {
   );
 }
 
-export type AuthGoogleLoginRequest = {
-  idToken: string;
-};
+export type AuthGoogleLoginRequest = Schemas["AuthGoogleLoginDto"];
 
-export type AuthGoogleLoginResponse = Tokens & {
-  user: User;
-};
+export type AuthGoogleLoginResponse = Schemas["LoginResponseDto"];
 
 export function useAuthGoogleLoginService() {
   const fetchBase = useFetch();
@@ -74,10 +66,7 @@ export function useAuthFacebookLoginService() {
   );
 }
 
-export type AuthSignUpRequest = {
-  email: string;
-  password: string;
-};
+export type AuthSignUpRequest = Schemas["AuthRegisterLoginDto"];
 
 export type AuthSignUpResponse = void;
 
@@ -96,9 +85,7 @@ export function useAuthSignUpService() {
   );
 }
 
-export type AuthConfirmEmailRequest = {
-  hash: string;
-};
+export type AuthConfirmEmailRequest = Schemas["AuthConfirmEmailDto"];
 
 export type AuthConfirmEmailResponse = void;
 
@@ -117,9 +104,7 @@ export function useAuthConfirmEmailService() {
   );
 }
 
-export type AuthConfirmNewEmailRequest = {
-  hash: string;
-};
+export type AuthConfirmNewEmailRequest = Schemas["AuthConfirmEmailDto"];
 
 export type AuthConfirmNewEmailResponse = void;
 
@@ -138,9 +123,7 @@ export function useAuthConfirmNewEmailService() {
   );
 }
 
-export type AuthForgotPasswordRequest = {
-  email: string;
-};
+export type AuthForgotPasswordRequest = Schemas["AuthForgotPasswordDto"];
 
 export type AuthForgotPasswordResponse = void;
 
@@ -159,10 +142,7 @@ export function useAuthForgotPasswordService() {
   );
 }
 
-export type AuthResetPasswordRequest = {
-  password: string;
-  hash: string;
-};
+export type AuthResetPasswordRequest = Schemas["AuthResetPasswordDto"];
 
 export type AuthResetPasswordResponse = void;
 
@@ -181,9 +161,7 @@ export function useAuthResetPasswordService() {
   );
 }
 
-export type AuthPatchMeRequest =
-  | Partial<Pick<User, "firstName" | "lastName" | "email">>
-  | { password: string; oldPassword: string };
+export type AuthPatchMeRequest = Schemas["AuthUpdateDto"];
 
 export type AuthPatchMeResponse = User;
 
