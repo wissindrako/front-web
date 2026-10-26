@@ -28,3 +28,11 @@ npm run generate:api
    `npm run generate:field` for the form fields. The entity type and the
    requests come from the contract; the compiler points out the fields the
    API requires that the form does not send yet.
+
+## CI
+
+`.github/workflows/checks.yml` regenerates the types from base-nest's
+`openapi.json` and fails if they differ from the committed ones. It needs the
+repository secret `BASE_NEST_TOKEN`: a fine-grained token with read-only
+*Contents* access to `wissindrako/base-nest`. Without it the step is skipped
+with a notice.

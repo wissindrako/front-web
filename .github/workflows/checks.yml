@@ -1,0 +1,66 @@
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      # Read-only token for wissindrako/base-nest (repository secret). Without
+      # it the API types step is skipped
+      BASE_NEST_TOKEN: ${{ secrets.BASE_NEST_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Set up env
+        run: cp example.env.local .env.local
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      # The API types are generated from base-nest's openapi.json: they must
+      # match the contract the API publishes (npm run generate:api after it
+      # changes)
+      - name: Check out the API contract
+        if: env.BASE_NEST_TOKEN != ''
+        uses: actions/checkout@v4
+        with:
+          repository: wissindrako/base-nest
+          token: ${{ secrets.BASE_NEST_TOKEN }}
+          path: base-nest
+          sparse-checkout: openapi.json
+          sparse-checkout-cone-mode: false
+
+      - name: API types up to date
+        if: env.BASE_NEST_TOKEN != ''
+        env:
+          OPENAPI_SPEC: base-nest/openapi.json
+        run: |
+          npm run generate:api
+          git diff --exit-code src/services/api/generated
+
+      - name: API types check skipped
+        if: env.BASE_NEST_TOKEN == ''
+        run: echo "::notice::Set the BASE_NEST_TOKEN secret to check the API types against base-nest's openapi.json"
