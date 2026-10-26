@@ -8,7 +8,7 @@ import useAuth from "@/services/auth/use-auth";
 import useAuthActions from "@/services/auth/use-auth-actions";
 import { useTranslation } from "@/services/i18n/client";
 import Link from "@/components/link";
-import { RoleEnum } from "@/services/api/types/role";
+import NavMenu from "@/components/nav-menu";
 import { IS_SIGN_UP_ENABLED } from "@/services/auth/config";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -131,13 +131,6 @@ function NavUser() {
 }
 
 function AppSidebar() {
-  const { t } = useTranslation("common");
-  const { user } = useAuth();
-  const pathname = usePathname();
-
-  const isAdmin =
-    !!user?.role && [RoleEnum.ADMIN].includes(Number(user?.role?.id));
-
   return (
     <>
       <CloseSidebarOnNavigate />
@@ -146,30 +139,8 @@ function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname.split("/").filter(Boolean).length <= 1}
-                  >
-                    <Link href="/">{t("common:navigation.home")}</Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-
-                {isAdmin && (
-                  <>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname.includes("/admin-panel/users")}
-                      >
-                        <Link href="/admin-panel/users">
-                          {t("common:navigation.users")}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    {/* sidebar-menu-items */}
-                  </>
-                )}
+                {/* Entries come from the API's menu (Admin panel > Menu) */}
+                <NavMenu />
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

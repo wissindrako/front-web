@@ -1,5 +1,18 @@
 {
   "title": "होम",
-  "description": "reactjs-boilerplate उदाहरण ऐप में आपका स्वागत है। पूरा दस्तावेज़ <0>यहाँ</0> देखा जा सकता है।",
+  "signedOut": {
+    "title": "Welcome",
+    "description": "Sign in to use the system. Access is managed in the identity center: if you were invited, sign in with the invitation email.",
+    "action": "Sign in"
+  },
+  "signedIn": {
+    "greeting": "Hi, {{name}}",
+    "description": "Signed in as {{email}}",
+    "shortcuts": "Your shortcuts",
+    "noShortcuts": "You have no access in this system yet. Ask an administrator to give you a role.",
+    "account": "My account",
+    "logout": "Sign out",
+    "myAccess": "See my roles and permissions"
+  },
   "privacyPolicy": "गोपनीयता नीति"
 }

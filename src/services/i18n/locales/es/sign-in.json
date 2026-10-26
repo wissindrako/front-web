@@ -28,5 +28,13 @@
       }
     }
   },
-  "or": "O"
+  "or": "O",
+  "identity": {
+    "redirecting": "Te llevamos al centro de identidad para iniciar sesión…",
+    "unavailable": "No se pudo contactar al centro de identidad. Probá de nuevo en un momento.",
+    "button": "Iniciar sesión con el centro de identidad",
+    "completing": "Completando el inicio de sesión…",
+    "failed": "No se pudo completar el inicio de sesión:",
+    "retry": "Intentar de nuevo"
+  }
 }

@@ -1,0 +1,28 @@
+{
+  "title": "Publications",
+  "table": {
+    "titulo": "Title",
+    "resumen": "Summary",
+    "contenido": "Content",
+    "estado": "State",
+    "publicadaEn": "Published on",
+    "<system>": "Do not remove this property"
+  },
+  "estados": {
+    "borrador": "Draft",
+    "publicada": "Published",
+    "archivada": "Archived"
+  },
+  "actions": {
+    "add": "Add publication",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "New publication"
+  },
+  "confirm": {
+    "delete": {
+      "title": "Delete publication",
+      "message": "Are you sure you want to delete this publication?"
+    }
+  }
+}

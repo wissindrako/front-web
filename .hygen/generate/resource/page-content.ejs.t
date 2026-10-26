@@ -3,7 +3,7 @@ to: src/app/[language]/admin-panel/<%= h.inflection.transform(name, ['pluralize'
 ---
 "use client";
 
-import { RoleEnum } from "@/services/api/types/role";
+import useAuth from "@/services/auth/use-auth";
 import withPageRequiredAuth from "@/services/auth/with-page-required-auth";
 import { useTranslation } from "@/services/i18n/client";
 import { useCallback, useMemo } from "react";
@@ -31,6 +31,9 @@ function Actions({ entityItem }: { entityItem: <%= h.pascalName(name) %> }) {
   const fetchDelete<%= h.pascalName(name) %> = useDelete<%= h.pascalName(name) %>Service();
   const queryClient = useQueryClient();
   const { t } = useTranslation("admin-panel-<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>");
+  const { permissions } = useAuth();
+  const canUpdate = permissions.includes("<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>.update");
+  const canDelete = permissions.includes("<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>.delete");
 
   const handleDelete = async () => {
     const isConfirmed = await confirmDialog({
@@ -62,6 +65,33 @@ function Actions({ entityItem }: { entityItem: <%= h.pascalName(name) %> }) {
       });
     }
   };
+
+  if (!canUpdate && !canDelete) return null;
+
+  if (!canDelete) {
+    return (
+      <Button asChild size="sm" data-testid="edit-button">
+        <Link
+          href={`/admin-panel/<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>/edit/${entityItem.id}`}
+        >
+          {t("actions.edit")}
+        </Link>
+      </Button>
+    );
+  }
+
+  if (!canUpdate) {
+    return (
+      <Button
+        size="sm"
+        variant="destructive"
+        onClick={handleDelete}
+        data-testid="delete-button"
+      >
+        {t("actions.delete")}
+      </Button>
+    );
+  }
 
   return (
     <div className="inline-flex items-center">
@@ -104,6 +134,7 @@ function Actions({ entityItem }: { entityItem: <%= h.pascalName(name) %> }) {
 
 function <%= h.pascalPluralName(name) %>PageContent() {
   const { t } = useTranslation("admin-panel-<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>");
+  const { permissions } = useAuth();
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useGet<%= h.pascalPluralName(name) %>ListQuery();
@@ -126,17 +157,19 @@ function <%= h.pascalPluralName(name) %>PageContent() {
           <h3 className="text-3xl font-semibold" data-testid="index-page-title">
             {t("title")}
           </h3>
-          <div className="flex items-center gap-2">
-            <Button
-              asChild
-              className="bg-success text-success-foreground hover:bg-success/90"
-              data-testid="add-button"
-            >
-              <Link href="/admin-panel/<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>/create">
-                {t("actions.create")}
-              </Link>
-            </Button>
-          </div>
+          {permissions.includes("<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>.create") && (
+            <div className="flex items-center gap-2">
+              <Button
+                asChild
+                className="bg-success text-success-foreground hover:bg-success/90"
+                data-testid="add-button"
+              >
+                <Link href="/admin-panel/<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>/create">
+                  {t("actions.create")}
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="mb-2">
@@ -185,4 +218,6 @@ function <%= h.pascalPluralName(name) %>PageContent() {
   );
 }
 
-export default withPageRequiredAuth(<%= h.pascalPluralName(name) %>PageContent, { roles: [RoleEnum.ADMIN] });
+export default withPageRequiredAuth(<%= h.pascalPluralName(name) %>PageContent, {
+  permissions: ["<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>.read"],
+});

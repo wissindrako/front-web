@@ -1,18 +1,11 @@
-import { FileEntity } from "./file-entity";
-import { Role } from "./role";
+import type { Schemas } from "./schemas";
 
 export enum UserProviderEnum {
   EMAIL = "email",
   GOOGLE = "google",
+  // Signed in at the identity center
+  IDENTITY = "identity",
 }
 
-export type User = {
-  id: string;
-  email: string;
-  firstName?: string;
-  lastName?: string;
-  photo?: FileEntity;
-  provider?: UserProviderEnum;
-  socialId?: string;
-  role?: Role;
-};
+// From the API's contract (npm run generate:api)
+export type User = Schemas["User"];

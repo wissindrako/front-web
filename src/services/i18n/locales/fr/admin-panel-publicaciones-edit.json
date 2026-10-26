@@ -1,0 +1,42 @@
+{
+  "title": "Edit publication",
+  "actions": {
+    "submit": "Save",
+    "cancel": "Cancel"
+  },
+  "inputs": {
+    "titulo": {
+      "label": "Title",
+      "validation": {
+        "required": "The title is required",
+        "max": "At most 200 characters"
+      }
+    },
+    "resumen": {
+      "label": "Summary (optional)",
+      "validation": {
+        "max": "At most 300 characters"
+      }
+    },
+    "contenido": {
+      "label": "Content",
+      "validation": {
+        "required": "The content is required"
+      }
+    },
+    "estado": {
+      "label": "State",
+      "validation": {
+        "required": "Pick a state"
+      }
+    },
+    "publicadaEn": {
+      "label": "Publication date (optional)",
+      "validation": {}
+    },
+    "<system>": "Do not remove this property"
+  },
+  "alerts": {
+    "success": "Publication saved"
+  }
+}

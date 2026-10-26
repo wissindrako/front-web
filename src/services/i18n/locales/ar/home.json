@@ -1,5 +1,18 @@
 {
   "title": "الرئيسية",
-  "description": "مرحبًا بك في تطبيق reactjs-boilerplate التجريبي. يمكن الاطلاع على الوثائق الكاملة <0>هنا</0>.",
+  "signedOut": {
+    "title": "Welcome",
+    "description": "Sign in to use the system. Access is managed in the identity center: if you were invited, sign in with the invitation email.",
+    "action": "Sign in"
+  },
+  "signedIn": {
+    "greeting": "Hi, {{name}}",
+    "description": "Signed in as {{email}}",
+    "shortcuts": "Your shortcuts",
+    "noShortcuts": "You have no access in this system yet. Ask an administrator to give you a role.",
+    "account": "My account",
+    "logout": "Sign out",
+    "myAccess": "See my roles and permissions"
+  },
   "privacyPolicy": "سياسة الخصوصية"
 }

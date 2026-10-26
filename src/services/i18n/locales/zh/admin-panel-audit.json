@@ -1,0 +1,42 @@
+{
+  "title": "Audit log",
+  "description": "Every change to the data: who made it, when, from where and what changed. Click a row to see the values.",
+  "actions": {
+    "INSERT": "Created",
+    "UPDATE": "Updated",
+    "DELETE": "Deleted",
+    "SOFT_DELETE": "Soft-deleted",
+    "RESTORE": "Restored"
+  },
+  "filters": {
+    "table": "Table",
+    "allTables": "All tables",
+    "action": "Action",
+    "allActions": "All actions",
+    "recordId": "Record ID",
+    "userId": "User ID",
+    "from": "From",
+    "to": "To",
+    "clear": "Clear filters"
+  },
+  "list": {
+    "date": "Date",
+    "action": "Action",
+    "record": "Record",
+    "user": "User",
+    "system": "System",
+    "recordHistory": "History of this record",
+    "userChanges": "Changes by this user",
+    "loading": "Loading…",
+    "error": "The audit log could not be loaded",
+    "empty": "No changes match these filters",
+    "more": "Load more"
+  },
+  "detail": {
+    "column": "Field",
+    "before": "Before",
+    "after": "After",
+    "noChanges": "No field values recorded",
+    "meta": "Entry {{id}} · database role {{dbUser}}"
+  }
+}

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { useForm, FormProvider, useFormState } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RoleEnum } from "@/services/api/types/role";
 import withPageRequiredAuth from "@/services/auth/with-page-required-auth";
 import { useSnackbar } from "@/hooks/use-snackbar";
 import Link from "@/components/link";
@@ -126,4 +125,6 @@ function Create() {
   return <FormCreate />;
 }
 
-export default withPageRequiredAuth(Create, { roles: [RoleEnum.ADMIN] });
+export default withPageRequiredAuth(Create, {
+  permissions: ["<%= h.inflection.transform(name, ['pluralize', 'underscore', 'dasherize']) %>.create"],
+});

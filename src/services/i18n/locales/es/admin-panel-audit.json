@@ -1,0 +1,42 @@
+{
+  "title": "Auditoría",
+  "description": "Cada cambio en los datos: quién lo hizo, cuándo, desde dónde y qué cambió. Hacé clic en una fila para ver los valores.",
+  "actions": {
+    "INSERT": "Creado",
+    "UPDATE": "Modificado",
+    "DELETE": "Eliminado",
+    "SOFT_DELETE": "Eliminado (lógico)",
+    "RESTORE": "Restaurado"
+  },
+  "filters": {
+    "table": "Tabla",
+    "allTables": "Todas las tablas",
+    "action": "Acción",
+    "allActions": "Todas las acciones",
+    "recordId": "ID del registro",
+    "userId": "ID de usuario",
+    "from": "Desde",
+    "to": "Hasta",
+    "clear": "Quitar filtros"
+  },
+  "list": {
+    "date": "Fecha",
+    "action": "Acción",
+    "record": "Registro",
+    "user": "Usuario",
+    "system": "Sistema",
+    "recordHistory": "Historial de este registro",
+    "userChanges": "Cambios de este usuario",
+    "loading": "Cargando…",
+    "error": "No se pudo cargar la auditoría",
+    "empty": "Ningún cambio coincide con los filtros",
+    "more": "Cargar más"
+  },
+  "detail": {
+    "column": "Campo",
+    "before": "Antes",
+    "after": "Después",
+    "noChanges": "No se guardaron valores de campos",
+    "meta": "Entrada {{id}} · rol de base de datos {{dbUser}}"
+  }
+}

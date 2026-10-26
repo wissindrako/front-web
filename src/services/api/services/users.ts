@@ -7,6 +7,7 @@ import { InfinityPaginationType } from "../types/infinity-pagination";
 import { Role } from "../types/role";
 import { SortEnum } from "../types/sort-type";
 import { RequestConfigType } from "./types/request-config";
+import type { Schemas } from "../types/schemas";
 
 export type UsersRequest = {
   page: number;
@@ -47,7 +48,8 @@ export function useGetUsersService() {
 }
 
 export type UserRequest = {
-  id: User["id"];
+  // From the URL too, where it is a string
+  id: User["id"] | string;
 };
 
 export type UserResponse = User;
@@ -66,12 +68,7 @@ export function useGetUserService() {
   );
 }
 
-export type UserPostRequest = Pick<
-  User,
-  "email" | "firstName" | "lastName" | "photo" | "role"
-> & {
-  password: string;
-};
+export type UserPostRequest = Schemas["CreateUserDto"];
 
 export type UserPostResponse = User;
 
@@ -91,12 +88,9 @@ export function usePostUserService() {
 }
 
 export type UserPatchRequest = {
-  id: User["id"];
-  data: Partial<
-    Pick<User, "email" | "firstName" | "lastName" | "photo" | "role"> & {
-      password: string;
-    }
-  >;
+  // From the URL too, where it is a string
+  id: User["id"] | string;
+  data: Schemas["UpdateUserDto"];
 };
 
 export type UserPatchResponse = User;
@@ -117,7 +111,8 @@ export function usePatchUserService() {
 }
 
 export type UsersDeleteRequest = {
-  id: User["id"];
+  // From the URL too, where it is a string
+  id: User["id"] | string;
 };
 
 export type UsersDeleteResponse = undefined;

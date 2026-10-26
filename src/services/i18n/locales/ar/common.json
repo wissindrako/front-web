@@ -8,7 +8,11 @@
     "signUp": "إنشاء حساب",
     "profile": "الملف الشخصي",
     "users": "المستخدمون",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "audit": "Audit log",
+    "administration": "Administration",
+    "menu": "Menu",
+    "publicaciones": "Publications"
   },
   "formInputs": {
     "avatarInput": {
@@ -37,5 +41,12 @@
     "facebook": {
       "action": "تسجيل الدخول عبر فيسبوك"
     }
+  },
+  "identityCenter": {
+    "title": "Managed by the identity center",
+    "open": "Open the identity center",
+    "invite": "Invite in the identity center",
+    "users": "People are invited from the identity center. Their user shows up here the first time they sign in.",
+    "access": "Each person's role, permissions and password are managed in the identity center."
   }
 }

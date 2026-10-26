@@ -8,7 +8,11 @@
     "signUp": "साइन अप",
     "profile": "प्रोफ़ाइल",
     "users": "उपयोगकर्ता",
-    "logout": "लॉगआउट"
+    "logout": "लॉगआउट",
+    "audit": "Audit log",
+    "administration": "Administration",
+    "menu": "Menu",
+    "publicaciones": "Publications"
   },
   "formInputs": {
     "avatarInput": {
@@ -37,5 +41,12 @@
     "facebook": {
       "action": "Facebook से लॉगिन करें"
     }
+  },
+  "identityCenter": {
+    "title": "Managed by the identity center",
+    "open": "Open the identity center",
+    "invite": "Invite in the identity center",
+    "users": "People are invited from the identity center. Their user shows up here the first time they sign in.",
+    "access": "Each person's role, permissions and password are managed in the identity center."
   }
 }

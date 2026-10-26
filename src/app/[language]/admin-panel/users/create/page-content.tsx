@@ -16,7 +16,10 @@ import { useTranslation } from "@/services/i18n/client";
 import { usePostUserService } from "@/services/api/services/users";
 import { useRouter } from "next/navigation";
 import { Role, RoleEnum } from "@/services/api/types/role";
+import type { Schemas } from "@/services/api/types/schemas";
 import FormSelectInput from "@/components/form/select/form-select";
+import IdentityCenterNotice from "@/components/identity-center-notice";
+import { useIdentitySettings } from "@/services/identity/use-identity-settings";
 
 type CreateFormData = {
   email: string;
@@ -25,7 +28,7 @@ type CreateFormData = {
   password: string;
   passwordConfirmation: string;
   photo?: FileEntity;
-  role: Role;
+  role: Schemas["RoleDto"];
 };
 
 const useValidationSchema = () => {
@@ -70,8 +73,7 @@ const useValidationSchema = () => {
     role: yup
       .object()
       .shape({
-        id: yup.mixed<string | number>().required(),
-        name: yup.string(),
+        id: yup.number().required(),
       })
       .required(t("admin-panel-users-create:inputs.role.validation.required")),
   });
@@ -235,7 +237,25 @@ function FormCreateUser() {
 }
 
 function CreateUser() {
+  const { t } = useTranslation("common");
+  const { managed, managementUrl } = useIdentitySettings();
+
+  if (managed === undefined) return null;
+
+  if (managed) {
+    return (
+      <div className="mx-auto mt-6 w-full max-w-md px-4">
+        <IdentityCenterNotice
+          message={t("common:identityCenter.users")}
+          managementUrl={managementUrl}
+        />
+      </div>
+    );
+  }
+
   return <FormCreateUser />;
 }
 
-export default withPageRequiredAuth(CreateUser, { roles: [RoleEnum.ADMIN] });
+export default withPageRequiredAuth(CreateUser, {
+  permissions: ["users.create"],
+});

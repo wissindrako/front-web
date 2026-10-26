@@ -1,0 +1,28 @@
+{
+  "title": "Publicaciones",
+  "table": {
+    "titulo": "Título",
+    "resumen": "Resumen",
+    "contenido": "Contenido",
+    "estado": "Estado",
+    "publicadaEn": "Publicada el",
+    "<system>": "Do not remove this property"
+  },
+  "estados": {
+    "borrador": "Borrador",
+    "publicada": "Publicada",
+    "archivada": "Archivada"
+  },
+  "actions": {
+    "add": "Agregar publicación",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "create": "Nueva publicación"
+  },
+  "confirm": {
+    "delete": {
+      "title": "Eliminar publicación",
+      "message": "¿Seguro que quieres eliminar esta publicación?"
+    }
+  }
+}

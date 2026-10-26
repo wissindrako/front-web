@@ -74,5 +74,31 @@
     "profile": {
       "success": "El perfil se ha actualizado correctamente"
     }
+  },
+  "access": {
+    "title": "Mis accesos",
+    "roles": "Roles en este sistema",
+    "noRoles": "Todavía no tienes roles en este sistema.",
+    "modulesTitle": "Lo que puedes hacer",
+    "noModules": "No tienes permisos en ningún módulo. Pide a un administrador que te asigne un rol.",
+    "managedByIdentity": "Los roles y permisos se gestionan en el centro de identidad.",
+    "managedByLocal": "Los roles y permisos se gestionan en este sistema.",
+    "loadError": "No se pudieron cargar tus accesos.",
+    "modules": {
+      "users": "Usuarios",
+      "users.permissions": "Privilegios de usuarios",
+      "roles": "Roles",
+      "settings": "Configuración",
+      "audit": "Auditoría",
+      "menu-items": "Menú",
+      "publicaciones": "Publicaciones"
+    },
+    "actions": {
+      "read": "Ver",
+      "create": "Crear",
+      "update": "Editar",
+      "delete": "Eliminar",
+      "manage": "Gestionar"
+    }
   }
 }

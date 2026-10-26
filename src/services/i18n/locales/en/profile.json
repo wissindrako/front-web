@@ -74,5 +74,31 @@
     "profile": {
       "success": "Profile has been updated successfully"
     }
+  },
+  "access": {
+    "title": "My access",
+    "roles": "Roles in this system",
+    "noRoles": "You have no roles in this system yet.",
+    "modulesTitle": "What you can do",
+    "noModules": "You have no permissions in any module. Ask an administrator to give you a role.",
+    "managedByIdentity": "Roles and permissions are managed in the identity center.",
+    "managedByLocal": "Roles and permissions are managed in this system.",
+    "loadError": "Your access could not be loaded.",
+    "modules": {
+      "users": "Users",
+      "users.permissions": "User privileges",
+      "roles": "Roles",
+      "settings": "Settings",
+      "audit": "Audit log",
+      "menu-items": "Menu",
+      "publicaciones": "Publications"
+    },
+    "actions": {
+      "read": "View",
+      "create": "Create",
+      "update": "Edit",
+      "delete": "Delete",
+      "manage": "Manage"
+    }
   }
 }

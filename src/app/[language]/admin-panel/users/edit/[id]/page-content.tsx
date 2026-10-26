@@ -1,7 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useForm, FormProvider, useFormState } from "react-hook-form";
+import {
+  useForm,
+  FormProvider,
+  useFormState,
+  type Resolver,
+} from "react-hook-form";
 import FormTextInput from "@/components/form/text-input/form-text-input";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,14 +25,17 @@ import {
 } from "@/services/api/services/users";
 import { useParams } from "next/navigation";
 import { Role, RoleEnum } from "@/services/api/types/role";
+import type { Schemas } from "@/services/api/types/schemas";
 import FormSelectInput from "@/components/form/select/form-select";
+import IdentityCenterNotice from "@/components/identity-center-notice";
+import { useIdentitySettings } from "@/services/identity/use-identity-settings";
 
 type EditUserFormData = {
   email: string;
   firstName: string;
   lastName: string;
   photo?: FileEntity;
-  role: Role;
+  role?: Schemas["RoleDto"];
 };
 
 type ChangeUserPasswordFormData = {
@@ -35,9 +43,8 @@ type ChangeUserPasswordFormData = {
   passwordConfirmation: string;
 };
 
-const useValidationEditUserSchema = () => {
+const useValidationEditUserSchema = (withRole: boolean) => {
   const { t } = useTranslation("admin-panel-users-edit");
-
   return yup.object().shape({
     email: yup
       .string()
@@ -56,12 +63,12 @@ const useValidationEditUserSchema = () => {
         t("admin-panel-users-edit:inputs.lastName.validation.required")
       ),
     role: yup
-      .object()
-      .shape({
-        id: yup.mixed<string | number>().required(),
-        name: yup.string(),
-      })
-      .required(t("admin-panel-users-edit:inputs.role.validation.required")),
+      .mixed<Schemas["RoleDto"]>()
+      .test(
+        "required",
+        t("admin-panel-users-edit:inputs.role.validation.required"),
+        (value) => !withRole || value?.id !== undefined
+      ),
   });
 };
 
@@ -113,17 +120,20 @@ function ChangePasswordUserFormActions() {
   );
 }
 
-function FormEditUser() {
+// withRole: false while the identity center manages roles
+function FormEditUser({ withRole }: { withRole: boolean }) {
   const params = useParams<{ id: string }>();
   const userId = params.id;
   const fetchGetUser = useGetUserService();
   const fetchPatchUser = usePatchUserService();
   const { t } = useTranslation("admin-panel-users-edit");
-  const validationSchema = useValidationEditUserSchema();
+  const validationSchema = useValidationEditUserSchema(withRole);
   const { enqueueSnackbar } = useSnackbar();
 
   const methods = useForm<EditUserFormData>({
-    resolver: yupResolver(validationSchema),
+    // yup types the role as a key that may hold undefined, the form as an
+    // optional key: the same values
+    resolver: yupResolver(validationSchema) as Resolver<EditUserFormData>,
     defaultValues: {
       email: "",
       firstName: "",
@@ -142,6 +152,7 @@ function FormEditUser() {
       data: {
         ...formData,
         email: isEmailDirty ? formData.email : undefined,
+        role: withRole ? formData.role : undefined,
       },
     });
     if (status === HTTP_CODES_ENUM.UNPROCESSABLE_ENTITY) {
@@ -174,16 +185,14 @@ function FormEditUser() {
           email: user?.email ?? "",
           firstName: user?.firstName ?? "",
           lastName: user?.lastName ?? "",
-          role: {
-            id: Number(user?.role?.id),
-          },
-          photo: user?.photo,
+          role: withRole ? { id: Number(user?.role?.id) } : undefined,
+          photo: user?.photo ?? undefined,
         });
       }
     };
 
     getInitialDataForEdit();
-  }, [userId, reset, fetchGetUser]);
+  }, [userId, reset, fetchGetUser, withRole]);
 
   return (
     <FormProvider {...methods}>
@@ -223,25 +232,27 @@ function FormEditUser() {
               />
             </div>
 
-            <div className="col-span-12">
-              <FormSelectInput<EditUserFormData, Pick<Role, "id">>
-                name="role"
-                testId="role"
-                label={t("admin-panel-users-edit:inputs.role.label")}
-                options={[
-                  {
-                    id: RoleEnum.ADMIN,
-                  },
-                  {
-                    id: RoleEnum.USER,
-                  },
-                ]}
-                keyValue="id"
-                renderOption={(option) =>
-                  t(`admin-panel-users-edit:inputs.role.options.${option.id}`)
-                }
-              />
-            </div>
+            {withRole && (
+              <div className="col-span-12">
+                <FormSelectInput<EditUserFormData, Pick<Role, "id">>
+                  name="role"
+                  testId="role"
+                  label={t("admin-panel-users-edit:inputs.role.label")}
+                  options={[
+                    {
+                      id: RoleEnum.ADMIN,
+                    },
+                    {
+                      id: RoleEnum.USER,
+                    },
+                  ]}
+                  keyValue="id"
+                  renderOption={(option) =>
+                    t(`admin-panel-users-edit:inputs.role.options.${option.id}`)
+                  }
+                />
+              </div>
+            )}
 
             <div className="col-span-12">
               <EditUserFormActions />
@@ -351,12 +362,33 @@ function FormChangePasswordUser() {
 }
 
 function EditUser() {
+  const { t } = useTranslation("common");
+  const { managed, managementUrl } = useIdentitySettings();
+
+  if (managed === undefined) return null;
+
+  if (managed) {
+    return (
+      <>
+        <FormEditUser withRole={false} />
+        <div className="mx-auto mb-6 w-full max-w-md px-4">
+          <IdentityCenterNotice
+            message={t("common:identityCenter.access")}
+            managementUrl={managementUrl}
+          />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
-      <FormEditUser />
+      <FormEditUser withRole />
       <FormChangePasswordUser />
     </>
   );
 }
 
-export default withPageRequiredAuth(EditUser, { roles: [RoleEnum.ADMIN] });
+export default withPageRequiredAuth(EditUser, {
+  permissions: ["users.update"],
+});

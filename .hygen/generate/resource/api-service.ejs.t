@@ -7,6 +7,7 @@ import { API_URL } from "../config";
 import wrapperFetchJsonResponse from "../wrapper-fetch-json-response";
 import { InfinityPaginationType } from "../types/infinity-pagination";
 import { RequestConfigType } from "./types/request-config";
+import type { Schemas } from "../types/schemas";
 import { <%= h.pascalName(name) %> as Entity } from "../types/<%= h.inflection.transform(name, ['underscore', 'dasherize']) %>";
 
 export type Get<%= h.pascalPluralName(name) %>ListRequest = {
@@ -54,7 +55,7 @@ export function useGet<%= h.pascalName(name) %>Service() {
   );
 }
 
-export type Create<%= h.pascalName(name) %>Request = Omit<Entity, "id" | "createdAt" | "updatedAt">;
+export type Create<%= h.pascalName(name) %>Request = Schemas["Create<%= h.pascalName(name) %>Dto"];
 
 export type Create<%= h.pascalName(name) %>Response = Entity;
 
@@ -75,7 +76,7 @@ export function useCreate<%= h.pascalName(name) %>Service() {
 
 export type Edit<%= h.pascalName(name) %>Request = {
   id: Entity["id"];
-  data: Partial<Omit<Entity, "id" | "createdAt" | "updatedAt">>;
+  data: Schemas["Update<%= h.pascalName(name) %>Dto"];
 };
 
 export type Edit<%= h.pascalName(name) %>Response = Entity;
